@@ -9,10 +9,10 @@ import {
 import Dashboard from "./pages/Dashboard";
 import FiltersPage from "./pages/FiltersPage";
 import ChartsPage from "./pages/ChartsPage";
-import LoginPage from "./pages/LoginPage"; // Import LoginPage
-import RegisterPage from "./pages/RegisterPage"; // Import RegisterPage
-import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
-import { AuthProvider, useAuth } from "./context/AuthContext"; // Import AuthProvider and useAuth
+import LoginPage from "./pages/LoginPage"; 
+import RegisterPage from "./pages/RegisterPage"; 
+import ProtectedRoute from "./components/ProtectedRoute"; 
+import { AuthProvider, useAuth } from "./context/AuthContext"; 
 
 function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -23,7 +23,7 @@ function AppContent() {
   const { user, logoutUser } = useAuth(); // Consolidate useAuth call
 
   const [transactions, setTransactions] = useState(() => {
-    if (!user) return []; // If no user, return empty array
+    if (!user) return []; 
     try {
       const stored = localStorage.getItem(`transactions_${user.id}`);
       return stored ? JSON.parse(stored) : [];
@@ -65,7 +65,7 @@ function AppContent() {
     if (user) {
       localStorage.setItem(
         `transactions_${user.id}`,
-        JSON.stringify(transactions)
+        JSON.stringify(transactions),
       );
     } else {
       // If user logs out, clear their data from state and localStorage
@@ -102,7 +102,7 @@ function AppContent() {
         acc.balance += tx.amount;
         return acc;
       },
-      { balance: 0, income: 0, expense: 0 }
+      { balance: 0, income: 0, expense: 0 },
     );
     return {
       balance: totals.balance,
@@ -114,8 +114,8 @@ function AppContent() {
   function handleAdd(newTx) {
     setTransactions((prev) =>
       [...prev, { ...newTx, id: generateId() }].sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      )
+        (a, b) => new Date(b.date) - new Date(a.date),
+      ),
     );
   }
 
@@ -127,7 +127,7 @@ function AppContent() {
     setTransactions((prev) =>
       prev
         .map((tx) => (tx.id === editing.id ? { ...tx, ...updatedFields } : tx))
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .sort((a, b) => new Date(b.date) - new Date(a.date)),
     );
     setEditing(null);
   }
